@@ -13,7 +13,7 @@ body {
   text-align: center;
 }
 
-#tituloinfo {color: blueviolet;}
+#tituloinfo {color: blueviolet; padding: 5px}
 
 textarea {
   width: 80%;

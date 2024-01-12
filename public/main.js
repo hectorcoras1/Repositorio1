@@ -1,17 +1,30 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('flightInfoInput');
-  
-  // Reemplaza la siguiente URL con la URL de tu servidor (puedes usar localhost para probar localmente)
-  const socket = io('http://localhost:3000');
+import { Howl } from 'howler';
+import io from 'socket.io-client';
 
-  input.addEventListener('input', () => {
-    const info = input.value.trim();
-    if (info !== "") {
-      // Enviar nueva información al servidor
-      socket.emit('flightInfo', info);
+const infoElement = document.getElementById('info');
 
-      // Limpiar el área de entrada
-      input.value = "";
-    }
+const socket = io(); 
+
+function emitNotificationSound() {
+  const sound = new Howl({
+    src: ['ruta-al-sonido/notificacion.mp3'],
   });
+  sound.play();
+}
+
+function readInformationAloud() {
+  const textToRead = infoElement.innerText;
+  const speech = new SpeechSynthesisUtterance(textToRead);
+  window.speechSynthesis.speak(speech);
+}
+
+function addNewInformation(newInfo) {
+  emitNotificationSound();
+  infoElement.innerText = newInfo;
+  readInformationAloud();
+}
+
+
+socket.on('newInfo', (info) => {
+  addNewInformation(info);
 });

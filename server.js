@@ -12,8 +12,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 io.on('connection', (socket) => {
   console.log('Usuario conectado');
 
-  socket.on('flightInfo', (info) => {
-    io.emit('flightInfo', info);
+  socket.on('newInfo', (info) => {
+    io.emit('newInfo', info);
   });
 
   socket.on('disconnect', () => {
